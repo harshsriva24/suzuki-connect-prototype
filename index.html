@@ -110,6 +110,18 @@ button{font:inherit;cursor:pointer;color:inherit}
 .icons{display:flex;justify-content:space-between;grid-column:1/-1;padding:8px 2px 0;border-top:1px solid var(--line);margin-top:2px}
 .icons svg{width:21px;height:21px;fill:var(--good)}
 .icons svg.w{fill:var(--warn)}
+.icons .si{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9px;font-weight:700;color:var(--ink-2);min-width:0;text-align:center;line-height:1.1}
+.icons .si.w svg{fill:var(--warn)} .icons .si.w{color:var(--warn)} .icons .si.off svg{fill:var(--ink-3)}
+.li.fx{grid-template-columns:1fr auto}
+.li.fx .t{font-size:13px}
+.nearby{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin:12px -16px 0;padding:0 16px}
+.nearby::-webkit-scrollbar{display:none}
+.nearby button{flex:none;display:flex;align-items:center;gap:6px;border:1px solid var(--line-2);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 12px;font-size:12px;font-weight:700}
+.nearby svg{width:15px;height:15px;fill:var(--accent)}
+.legend{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}
+.legend div{background:rgba(255,255,255,.14);border-radius:10px;padding:7px 4px;text-align:center;font-size:10.5px;font-weight:700}
+.legend b{display:block;font-size:17px}
+.fixed li{font-size:12.5px}
 .okline{text-align:center;color:var(--ink-2);font-size:12.5px;margin:10px 0 0}
 .okline b{color:var(--warn)}
 .hero{display:block;width:270px;max-width:94%;margin:4px auto 0}
@@ -359,6 +371,25 @@ button.li:active{background:var(--surface)}
 .rule b{color:#10233a}
 .ledger td:last-child{text-align:right;font-weight:800}
 .ledger tr.tot td{font-size:14px;border-top:2px solid #e6ecf3}
+.cmp{max-width:860px;margin:0 auto}
+.cmp h2{margin:0;font-size:24px;font-weight:800;letter-spacing:-.01em;text-align:center}
+.cmp .lede{color:var(--page-ink-2);text-align:center;margin:6px 0 22px;font-size:14px}
+.cmp-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.cmp-tile{background:var(--page-card);border:1px solid var(--page-line);border-radius:16px;padding:16px;text-align:center}
+.cmp-tile .was{font-size:13px;color:#ff8a80;text-decoration:line-through;font-weight:700}
+.cmp-tile .now{font-size:30px;font-weight:800;color:#4ade80;line-height:1.1;margin-top:2px}
+.cmp-tile .k{font-size:12px;color:var(--page-ink-2);margin-top:4px}
+.cmp-table{width:100%;border-collapse:separate;border-spacing:0;background:var(--page-card);border:1px solid var(--page-line);border-radius:16px;overflow:hidden;font-size:14px}
+.cmp-table th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:12px 14px;text-align:left;color:var(--page-ink-2);background:rgba(255,255,255,.04)}
+.cmp-table th.after{color:#4ca1f6}
+.cmp-table td{padding:12px 14px;border-top:1px solid var(--page-line);vertical-align:top}
+.cmp-table td:first-child{color:var(--page-ink-2);font-weight:700;width:26%}
+.cmp-table td.b4{color:#c9d4e0;width:34%}
+.cmp-table td.b4::before{content:"✕ ";color:#ff8a80;font-weight:800}
+.cmp-table td.af{color:#fff;font-weight:700}
+.cmp-table td.af::before{content:"✓ ";color:#4ade80;font-weight:800}
+.cmp .src{font-size:11px;color:#6f839a;text-align:center;margin-top:12px}
+@media(max-width:620px){.cmp-tiles{grid-template-columns:1fr}.cmp-table{font-size:12.5px}.cmp-table td,.cmp-table th{padding:10px 9px}}
 :focus-visible{outline:2px solid #4ca1f6;outline-offset:2px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -374,6 +405,7 @@ button.li:active{background:var(--surface)}
       <div class="seg-page" role="group" aria-label="Choose a view">
         <button id="sw-owner" aria-pressed="true" onclick="showSide('owner')">Owner app</button>
         <button id="sw-console" aria-pressed="false" onclick="showSide('console')">Dealer &amp; Maruti console</button>
+        <button id="sw-compare" aria-pressed="false" onclick="showSide('compare')">Before vs After</button>
       </div>
       <button class="ghostbtn" id="guideBtn" onclick="toggleGuide()">Hide guide</button>
     </div>
@@ -407,6 +439,8 @@ button.li:active{background:var(--surface)}
           <button class="step" onclick="demo(3)"><span class="n">3</span><span><b>Book a slot</b><span>Own dealer, pick-up</span></span></button>
           <button class="step" onclick="demo(4)"><span class="n">4</span><span><b>Dealer console</b><span>Job arrives</span></span></button>
           <button class="step" onclick="demo(5)"><span class="n">5</span><span><b>Safe-driver reward</b><span>Opt-in</span></span></button>
+          <button class="step" onclick="demo(6)"><span class="n">6</span><span><b>All features</b><span>Today's app, inside 2.0</span></span></button>
+          <button class="step" onclick="showSide('compare')"><span class="n">7</span><span><b>Before vs After</b><span>Why 2.0 is better</span></span></button>
         </div>
         <button class="reset" onclick="resetDemo()">↺ Reset</button>
       </div>
@@ -423,6 +457,30 @@ button.li:active{background:var(--surface)}
       </div>
     </div>
     <div id="console-body"></div>
+  </section>
+
+  <!-- ================= BEFORE vs AFTER ================= -->
+  <section id="side-compare" class="cmp" hidden>
+    <h2>Today's Suzuki Connect → Connect 2.0</h2>
+    <p class="lede">Same features. Safety free, price where people renew, dealer paid.</p>
+    <div class="cmp-tiles">
+      <div class="cmp-tile"><div class="was">Lapses after 3 yrs</div><div class="now">₹0</div><div class="k">safety, for life</div></div>
+      <div class="cmp-tile"><div class="was">₹2,899+ a year</div><div class="now">₹999</div><div class="k">or ₹83 a month on UPI</div></div>
+      <div class="cmp-tile"><div class="was">3 apps</div><div class="now">1 app</div><div class="k">car, service, insurance</div></div>
+    </div>
+    <table class="cmp-table">
+      <thead><tr><th></th><th>Before · today</th><th class="after">After · Connect 2.0</th></tr></thead>
+      <tbody>
+        <tr><td>SOS and crash alerts</td><td class="b4">Stop when the plan lapses</td><td class="af">Free for the life of the car</td></tr>
+        <tr><td>Would renew</td><td class="b4">13–28% at ₹2,899</td><td class="af">41% at ₹999</td></tr>
+        <tr><td>Faults</td><td class="b4">Shows battery voltage</td><td class="af">Predicted weeks early, dealer slot booked</td></tr>
+        <tr><td>Renewal</td><td class="b4">Payment page breaks</td><td class="af">UPI, same price in app or at dealer</td></tr>
+        <tr><td>Dealer after the sale</td><td class="b4">Earns ₹0</td><td class="af">₹150 + ₹100 on every renewal</td></tr>
+        <tr><td>Revenue streams</td><td class="b4">1 · subscription</td><td class="af">3 · Plus, Care+, insurance</td></tr>
+        <tr><td>Year-3 revenue</td><td class="b4">Rests on one ₹2,899 renewal</td><td class="af">₹178 Cr · 44% margin</td></tr>
+      </tbody>
+    </table>
+    <div class="src">Before: Suzuki Connect store listings, Maruti subscribe page, owner reviews (Nov 2026). After: our survey (n = 32) and illustrative 3-year model.</div>
   </section>
 
   <div class="disclaimer">Concept prototype · XCELerate 2026 · not an official Maruti Suzuki app</div>
@@ -443,6 +501,15 @@ const fresh = () => ({
   locked:true, ac:false, alarm:false, hazard:false, lamp:false,
   option:null, day:null, time:null, pickup:true, booked:null, bookingStage:0,
   newJob:false,
+  /* features carried over from today's Suzuki Connect */
+  valet:false, acSched:true, acTime:'08:15', acTemp:22,
+  speedOn:true, speedLimit:80, safeTime:false, tripAlerts:true, lowFuel:true, acLeft:true,
+  boardScope:'City',
+  fences:[
+    {n:'Home', d:'Sector 62, Noida · enter and exit', on:true},
+    {n:'Office', d:'Udyog Vihar, Gurugram · enter and exit', on:true},
+    {n:'Papa', d:'Indirapuram, Ghaziabad · arrival only', on:false},
+  ],
   jobs:[
     {car:'Dzire · UP16 AR 0932', owner:'K. Rawat', fault:'Battery', due:'2 wk', plan:'Care+', status:'Booked', slot:'Thu 23 · 10:00', parts:true},
     {car:'Swift · HR26 CJ 2210', owner:'M. Gupta', fault:'Brake pads', due:'5 wk', plan:'Care+', status:'Predicted'},
@@ -500,6 +567,22 @@ const I = {
   close:'<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>',
   headset:'<svg viewBox="0 0 24 24"><path d="M4 13a8 8 0 0 1 16 0"/><rect x="3" y="12" width="4" height="6" rx="1.5"/><rect x="17" y="12" width="4" height="6" rx="1.5"/><path d="M19 18v1a2 2 0 0 1-2 2h-3"/></svg>',
   history:'<svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5M12 8v4l3 2"/></svg>',
+  speed:'<svg viewBox="0 0 24 24"><path d="M12 4a10 10 0 0 0-8.7 15h17.4A10 10 0 0 0 12 4zm0 2a8 8 0 0 1 7.4 11H4.6A8 8 0 0 1 12 6zm4.2 3.4-4.9 4.2a1.5 1.5 0 1 0 1.8 1.8z"/></svg>',
+  clock:'<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 2a8 8 0 1 1 0 16 8 8 0 0 1 0-16zm-1 3v6l5 3 1-1.7-4-2.4V7z"/></svg>',
+  key:'<svg viewBox="0 0 24 24"><path d="M7 9a5 5 0 1 1 4.6 7H11v2H9v2H6v-3.4l4.4-4.4A5 5 0 0 1 7 9zm5-1.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" transform="rotate(180 12 12)"/></svg>',
+  watch:'<svg viewBox="0 0 24 24"><path d="M8 2h8l1 4a5 5 0 0 1 2 4v4a5 5 0 0 1-2 4l-1 4H8l-1-4a5 5 0 0 1-2-4v-4a5 5 0 0 1 2-4zm1 6a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2z"/></svg>',
+  voice:'<svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zM5 10h2a5 5 0 0 0 10 0h2a7 7 0 0 1-6 6.9V20h3v2H8v-2h3v-3.1A7 7 0 0 1 5 10z"/></svg>',
+  screen:'<svg viewBox="0 0 24 24"><path d="M3 4h18v12H3zm2 2v8h14V6zM8 18h8v2H8z"/></svg>',
+  update:'<svg viewBox="0 0 24 24"><path d="M12 4a8 8 0 0 0-7.4 5H2l3.5 4L9 9H6.8A6 6 0 1 1 6 13H4a8 8 0 1 0 8-9zm-1 4v5l4 2.4.8-1.3-3.3-2V8z"/></svg>',
+  book:'<svg viewBox="0 0 24 24"><path d="M5 3h11a3 3 0 0 1 3 3v15H7a2 2 0 0 1-2-2zm2 14v2h10v-2zm2-11v2h6V6z"/></svg>',
+  bag:'<svg viewBox="0 0 24 24"><path d="M8 7V6a4 4 0 0 1 8 0v1h4l-1 14H5L4 7zm2 0h4V6a2 2 0 0 0-4 0z"/></svg>',
+  tag:'<svg viewBox="0 0 24 24"><path d="M3 3h8l10 10-8 8L3 11zm4.5 2.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>',
+  guest:'<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0 1 14 0zM17 7h2v3h3v2h-3v3h-2v-3h-3v-2h3z"/></svg>',
+  fuelp:'<svg viewBox="0 0 24 24"><path d="M4 3h10v18H4zm2 2v5h6V5zm10 2 4 4v7.5a1.5 1.5 0 0 1-3 0V14h-1v-2h1.5a1.5 1.5 0 0 1 1.5 1.5v-2.3L15.6 8.6z"/></svg>',
+  park:'<svg viewBox="0 0 24 24"><path d="M5 3h14v18H5zm4 4v10h2v-3h2a3.5 3.5 0 0 0 0-7zm2 2h2a1.5 1.5 0 0 1 0 3h-2z"/></svg>',
+  plug:'<svg viewBox="0 0 24 24"><path d="M8 2h2v5h4V2h2v5h2v4a6 6 0 0 1-5 5.9V22h-2v-5.1A6 6 0 0 1 6 11V7h2z"/></svg>',
+  route:'<svg viewBox="0 0 24 24"><path d="M6 2a3 3 0 0 0-3 3c0 2.3 3 5.5 3 5.5S9 7.3 9 5a3 3 0 0 0-3-3zm12 11a3 3 0 0 0-3 3c0 2.3 3 5.5 3 5.5s3-3.2 3-5.5a3 3 0 0 0-3-3zM6 12v3a4 4 0 0 0 4 4h4v-2h-4a2 2 0 0 1-2-2v-1h6a4 4 0 0 0 0-8h-3v2h3a2 2 0 0 1 0 4H8v0z"/></svg>',
+  grid:'<svg viewBox="0 0 24 24"><path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 0h8v8h-8z"/></svg>',
   chev:'<svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>',
   check:'<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
   x:'<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>',
@@ -510,7 +593,7 @@ const I = {
    NAVIGATION
    ============================================================ */
 const TABS = [['home','Home',I.home],['location','Location',I.loc],['trips','Trips',I.trips],['remote','Remote',I.remote],['alerts','Alerts',I.bell]];
-const PARENT = { settings:'home', plans:'home', privacy:'home', health:'remote', book:'remote', booked:'remote' };
+const PARENT = { settings:'home', plans:'home', privacy:'home', health:'remote', book:'remote', booked:'remote', limits:'remote', fences:'location', features:'home' };
 function go(t){ S.screen=t; S.stack=[]; S.sheet=null; render(true); }
 function push(s){ S.stack.push(S.screen); S.screen=s; S.sheet=null; render(true); }
 function back(){ S.screen = S.stack.pop() || PARENT[S.screen] || 'home'; S.sheet=null; render(true); }
@@ -524,12 +607,16 @@ function toast(msg){ S.toast=msg; render(); clearTimeout(tt); tt=setTimeout(()=>
    ============================================================ */
 const fuel = n => '<span class="fuel">'+Array.from({length:10},(_,i)=>`<i class="${i<n?'on':''}"></i>`).join('')+'</span>';
 const batteryWarn = () => !S.booked;
+/* labelled status icon: today's app shows these as bare green icons, so owners guess what each means */
+const si = (ic, label, off, warn) => `<span class="si${off?' off':''}${warn?' w':''}">${ic}<span>${label}</span></span>`;
 const dashboard = () => `
   <div class="card dash">
     <div class="lab">Fuel ${fuel(6)}<br>Range <b>248</b><small>km</small></div>
     <div class="vr"></div>
     <div class="lab">Odometer<br><b>18,642</b><small>km</small></div>
-    <div class="icons" aria-label="Car status">${I.ac}${I.hazard}${I.lamp}${batteryWarn()?I.battery.replace('<svg','<svg class="w"'):I.battery}${I.lock}${I.car}</div>
+    <div class="icons" aria-label="Car status">
+      ${si(I.ac, S.ac?'A/C on':'A/C off', !S.ac)}${si(I.hazard, S.hazard?'Hazard on':'Hazard off', !S.hazard)}${si(I.lamp, S.lamp?'Lights on':'Lights off', !S.lamp)}
+      ${batteryWarn()?si(I.battery,'11.4 V low',false,true):si(I.battery,'12.6 V')}${si(S.locked?I.lock:I.unlock, S.locked?'Locked':'Unlocked')}${si(I.car,'Engine off',true)}</div>
   </div>`;
 
 /* ============================================================
@@ -548,6 +635,9 @@ const heads = {
   privacy: () => headBack('Data &amp; Privacy'),
   health: () => headBack('Vehicle Health', sub),
   book: () => headBack('Book a service'),
+  limits: () => headBack('Alerts &amp; limits', sub),
+  fences: () => headBack('Geofence', `${S.fences.length} of 5 zones`),
+  features: () => headBack('All features', 'Today\'s Connect, inside 2.0'),
   booked: () => `<span></span><div><div class="ttl">Booking confirmed</div></div><button class="ico" aria-label="Close" onclick="go('home')">${I.close}</button>`,
 };
 
@@ -589,7 +679,7 @@ const screens = {
       <div class="carpin"><span class="pulse"></span><span class="dotc">${I.car}</span></div>
       <button class="fab" style="top:62px" aria-label="Navigate to car" onclick="toast('Opening directions to your car · 120 m')">${I.nav}</button>
       <button class="fab" style="bottom:62px" aria-label="Share live location" onclick="toast('Live location shared with Papa for 2 hours')">${I.share}</button>
-      <button class="fab" style="bottom:12px" aria-label="Geofence" onclick="toast('Geofence: Office · 500 m · alerts on')">${I.fence}</button>
+      <button class="fab" style="bottom:12px" aria-label="Geofence" onclick="push('fences')">${I.fence}</button>
     </div>
     <div class="card" style="margin-top:12px">
       <div class="b" style="font-size:15px">Current car location</div>
@@ -599,9 +689,33 @@ const screens = {
         <button class="btn soft" onclick="toast('Live location shared with Papa for 2 hours')">Share live location</button>
       </div>
     </div>
+    <div class="nearby" aria-label="Nearby">
+      <button onclick="toast('3 fuel stations within 2 km · nearest IOCL, 600 m')">${I.fuelp}Fuel</button>
+      <button onclick="toast('Parking booked · Cyber Hub P2 · ₹60 an hour · navigating')">${I.park}Book parking</button>
+      <button onclick="toast('Nearest ARENA workshop: ${DEALER.name}, 1.2 km')">${I.wrench}Service</button>
+      <button onclick="toast('2 fast chargers within 3 km · 1 free now')">${I.plug}EV chargers</button>
+    </div>
     <div class="list" style="margin-top:10px">
-      <button class="li" onclick="toast('Geofence: Office · 500 m · alerts on')"><span class="ic acc">${I.fence}</span><span><div class="t">Geofence</div><div class="d">Home and Office active · up to 5 zones</div></span>${I.chev}</button>
+      <button class="li" onclick="push('fences')"><span class="ic acc">${I.fence}</span><span><div class="t">Geofence</div><div class="d">${S.fences.filter(f=>f.on).length} zones active · draw any shape, up to 5</div></span>${I.chev}</button>
+      <button class="li" onclick="toast('Trip planned: Gurugram to Jaipur · 268 km · fuel stop at Behror · sent to the car')"><span class="ic acc">${I.route}</span><span><div class="t">Plan a trip</div><div class="d">Route, fuel stops, send to SmartPlay Pro</div></span>${I.chev}</button>
     </div>`;
+  },
+
+  /* ---------------- GEOFENCE (polygon, as in today's app) ---------------- */
+  fences(){
+    return `
+    <div class="mapfull" style="height:250px" role="img" aria-label="Map with a drawn geofence">
+      <div class="blk" style="left:6%;top:24%;width:30%;height:22%"></div><div class="blk" style="left:56%;top:20%;width:36%;height:26%"></div><div class="blk" style="left:10%;top:64%;width:38%;height:22%"></div>
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%"><polygon points="22,22 70,16 82,52 58,84 18,70" fill="rgba(217,48,37,.16)" stroke="var(--crit)" stroke-width=".8" vector-effect="non-scaling-stroke"/></svg>
+      <div class="lbl" style="left:58%;top:10%">UDYOG VIHAR</div>
+      <div class="carpin"><span class="dotc">${I.car}</span></div>
+    </div>
+    <div class="row" style="margin:14px 2px 8px"><b>Your zones</b><span class="muted">${S.fences.length} of 5 used</span></div>
+    <div class="list">
+      ${S.fences.map((f,i)=>`<div class="li"><span class="ic ${f.on?'acc':'grey'}">${I.fence}</span><span><div class="t">${f.n}</div><div class="d">${f.d}</div></span><button class="tog" role="switch" aria-checked="${f.on}" aria-label="${f.n}" onclick="plusOr(()=>{S.fences[${i}].on=!S.fences[${i}].on;toast(S.fences[${i}].on?'${f.n}: alerts on':'${f.n}: alerts off')})"></button></div>`).join('')}
+    </div>
+    <button class="btn soft" style="margin-top:12px" onclick="plusOr(()=>toast('Tap points on the map to draw the new zone'))">+ Add a zone</button>
+    <button class="btn text" style="width:100%" onclick="push('limits')">Safe Time and speed limits</button>`;
   },
 
   /* ---------------- TRIPS ---------------- */
@@ -609,7 +723,7 @@ const screens = {
     const seg = `<div class="segtabs" role="tablist">${[['history','Trip History'],['analysis','Driving Analysis'],['board','Leaderboard']].map(([k,l])=>`<button role="tab" aria-pressed="${S.tripTab===k}" onclick="S.tripTab='${k}';render(true)">${l}</button>`).join('')}</div>`;
     if(S.tripTab==='history'){
       const trip=(when,km,eco,from,to,sc,path)=>`
-        <div class="card trip"><div class="when">${when}</div>
+        <div class="card trip"><div class="when row">${when}<button class="share" style="border:0;background:none;color:var(--accent);padding:0" aria-label="Share trip" onclick="toast('Trip card shared to WhatsApp')">${I.share.replace('<svg','<svg style="width:16px;height:16px;fill:currentColor"')}</button></div>
           <div class="map"><svg viewBox="0 0 300 104" preserveAspectRatio="none"><path d="${path}" fill="none" stroke="#1a73e8" stroke-width="3.5" stroke-linecap="round"/></svg><span class="km">${km} km · ${eco} kmpl</span></div>
           <div class="ft"><div><span>● ${from}</span><span class="muted">● ${to}</span></div><div class="sc">${sc}</div></div></div>`;
       return seg + `<div class="stack">`+
@@ -617,8 +731,12 @@ const screens = {
         trip('Yesterday · 07:05 – 08:02 PM','33.1','15.1','Udyog Vihar, Gurugram','Sector 62, Noida',79,'M20 28 C 60 82, 140 18, 190 70 S 262 90, 286 40') + `</div>`;
     }
     if(S.tripTab==='board'){
-      const rows=[[1,'HR26 EV 8640 · Baleno',91],[2,'You · Brezza',82],[3,'DL8C AF 1123 · Grand Vitara',78],[4,'HR26 CJ 2210 · Swift',74]];
-      return seg + `<div class="card"><div class="row"><b>This month · Gurugram</b><span class="muted">driving score</span></div><div style="margin-top:6px">${rows.map(([r,n,s])=>`<div class="lb ${r===2?'me':''}"><span class="tag ${r===2?'acc':'grey'}">#${r}</span><span>${n}</span><b>${s}</b></div>`).join('')}</div></div>`;
+      const rank={City:[2,'Gurugram'],State:[14,'Haryana'],India:[1208,'India']}[S.boardScope];
+      const rows=S.boardScope==='City'
+        ? [[1,'HR26 EV 8640 · Baleno',91],[2,'You · Brezza',82],[3,'DL8C AF 1123 · Grand Vitara',78],[4,'HR26 CJ 2210 · Swift',74]]
+        : [[1,'Top driver · '+rank[1],96],[2,'2nd · '+rank[1],95],[3,'3rd · '+rank[1],95],[rank[0],'You · Brezza',82]];
+      return seg + `<div class="chips" style="padding-bottom:10px">${['City','State','India'].map(c=>`<button aria-pressed="${S.boardScope===c}" onclick="S.boardScope='${c}';render()">${c}</button>`).join('')}</div>
+      <div class="card"><div class="row"><b>This month · ${rank[1]}</b><span class="muted">driving score</span></div><div style="margin-top:6px">${rows.map(([r,n,s])=>`<div class="lb ${n.startsWith('You')?'me':''}"><span class="tag ${n.startsWith('You')?'acc':'grey'}">#${r.toLocaleString('en-IN')}</span><span>${n}</span><b>${s}</b></div>`).join('')}</div></div>`;
     }
     const r=44, c=2*Math.PI*r, pct=.82;
     return seg + `
@@ -658,6 +776,13 @@ const screens = {
       ${pill('sos', 'SOS', I.phone, false, true)}
     </div>
     <div class="fine" style="margin-top:8px;text-align:center">${S.plus?`Plus · free until ${S.plusFreeUntil}`:'Immobiliser and SOS are always free'}</div>
+    <div class="sec">More controls</div>
+    <div class="list">
+      <button class="li" onclick="plusOr(()=>sheet('acsched'))"><span class="ic acc">${I.clock}</span><span><div class="t">Scheduled A/C</div><div class="d">${S.acSched?`Weekdays · ${S.acTime} · ${S.acTemp}°C`:'Off'}</div></span>${I.chev}</button>
+      <button class="li" onclick="toast(batteryWarn()?'Battery 11.4 V · low · see Vehicle health':'Battery 12.6 V · healthy')"><span class="ic ${batteryWarn()?'warn':'good'}">${I.battery}</span><span><div class="t">Battery check</div><div class="d">${batteryWarn()?'11.4 V · below normal':'12.6 V · healthy'}</div></span>${I.chev}</button>
+      <div class="li"><span class="ic acc">${I.key}</span><span><div class="t">Valet mode</div><div class="d">Alert if driven over 2 km or 40 km/h</div></span><button class="tog" role="switch" aria-checked="${S.valet}" aria-label="Valet mode" onclick="plusOr(()=>{S.valet=!S.valet;toast(S.valet?'Valet mode on · you will be alerted':'Valet mode off')})"></button></div>
+      <button class="li" onclick="push('limits')"><span class="ic crit">${I.speed}</span><span><div class="t">Alerts &amp; limits</div><div class="d">Overspeed ${S.speedOn?S.speedLimit+' km/h':'off'} · Safe Time ${S.safeTime?'on':'off'} · crash and theft always on</div></span>${I.chev}</button>
+    </div>
     <div class="sec">Vehicle health</div>
     <button class="insight" onclick="push('health')">
       <span class="ic ${S.booked?'care':'warn'}">${S.booked?I.wrench:I.battery}</span>
@@ -672,7 +797,9 @@ const screens = {
       ['Trips','acc',I.nav,'Reached office · Papa notified','32.4 km · 51 min · driving score 84','09:31',true,()=>"S.tripTab='history';go('trips')"],
       ['Safety','crit',I.shield,'Seatbelt reminder','Driver belt unbuckled at 14 km/h · cleared','08:44',false,null],
       ['Plans','care',I.card,'Free Plus year ends 10 Nov','₹999/year after that. Safe stays on.','Yesterday',false,()=>"push('plans')"],
-      ['Security','acc',I.fence,'Geofence · Office','Car entered the Office zone','Yesterday',false,null],
+      ['Safety','crit',I.speed,'Overspeed · 92 km/h','Your limit is 80 km/h · NH 48, Rajiv Chowk','Yesterday',false,()=>"push('limits')"],
+      ['Security','acc',I.fence,'Geofence · Office','Car entered the Office zone','Yesterday',false,()=>"push('fences')"],
+      ['Health','warn',I.ac,'A/C left on while parked','Switched off from the alert · 12 min','Sat',false,()=>"push('limits')"],
       ['Security','good',I.lock,'Car locked','Locked from the app','Yesterday',false,null],
       ['Safety','good',I.shield,'Monthly safety check','SOS, crash and theft alerts working','1 Oct',false,null],
     ];
@@ -689,8 +816,10 @@ const screens = {
     return `
     <div class="card" style="display:flex;gap:12px;align-items:center">
       <span class="avatar" style="width:46px;height:46px;font-size:16px">AS</span>
-      <div style="flex:1"><div class="b" style="font-size:15px">Ananya S.</div><div class="muted">Brezza ZXi · UP16 AB 4421</div></div>${I.chev}
+      <div style="flex:1"><div class="b" style="font-size:15px">Ananya S.</div><div class="muted">Brezza ZXi · UP16 AB 4421</div></div>
+      <button class="btn sm soft" onclick="sheet('cars')">My cars · 2</button>
     </div>
+    <button class="insight" style="margin-top:10px" onclick="push('features')"><span class="ic acc">${I.grid}</span><span><div class="t">All features</div><div class="d">Every Suzuki Connect feature and its plan</div></span>${I.chev}</button>
     <div class="sec">Your car</div>
     <div class="list">
       <button class="li" onclick="push('plans')"><span class="ic acc">${I.card}</span><span><div class="t">Plans &amp; Subscription</div><div class="d">${S.care?'Care+ · includes Plus':S.plus?'Plus · free until '+S.plusFreeUntil:'Safe · free for life'}</div></span>${I.chev}</button>
@@ -698,8 +827,24 @@ const screens = {
       <button class="li" onclick="toast('${DEALER.name} · ${DEALER.place}')"><span class="ic grey">${I.store}</span><span><div class="t">My dealer</div><div class="d">${DEALER.name} · ${DEALER.place}</div></span>${I.chev}</button>
       <button class="li" onclick="toast('Emergency contacts: Papa, Maa')"><span class="ic crit">${I.phone}</span><span><div class="t">Emergency contacts</div><div class="d">Papa, Maa · alerted on SOS or crash</div></span>${I.chev}</button>
     </div>
+    <div class="sec">Connected devices</div>
+    <div class="list">
+      <button class="li" onclick="plusOr(()=>toast('Apple Watch paired · lock, A/C and location behind a 4-digit mPIN'))"><span class="ic acc">${I.watch}</span><span><div class="t">Apple Watch</div><div class="d">Paired · mPIN on</div></span>${I.chev}</button>
+      <button class="li" onclick="plusOr(()=>toast('Try: “Alexa, ask Suzuki where my car is”'))"><span class="ic acc">${I.voice}</span><span><div class="t">Alexa</div><div class="d">Lock, location, odometer, drive history</div></span>${I.chev}</button>
+      <button class="li" onclick="plusOr(()=>toast('SmartPlay Pro synced · in-car Alexa, apps and Suzuki navigation on'))"><span class="ic acc">${I.screen}</span><span><div class="t">SmartPlay Pro sync</div><div class="d">In-car Alexa, app store, navigation</div></span>${I.chev}</button>
+      <button class="li" onclick="toast('Up to date · maps updated 2 Nov 2026')"><span class="ic good">${I.update}</span><span><div class="t">Software and map updates</div><div class="d">Over the air · up to date</div></span>${I.chev}</button>
+    </div>
+    <div class="sec">Ownership</div>
+    <div class="list">
+      <button class="li" onclick="toast('Last service 14 Jul 2026 at 15,210 km · warranty till Oct 2028')"><span class="ic grey">${I.wrench}</span><span><div class="t">Service history and contract</div><div class="d">Last service 14 Jul · warranty till Oct 2028</div></span>${I.chev}</button>
+      <button class="li" onclick="toast('Guest access sent to Rohan · sees location, no remote control')"><span class="ic grey">${I.guest}</span><span><div class="t">Guest access</div><div class="d">Share view-only access with family</div></span>${I.chev}</button>
+      <button class="li" onclick="toast('Genuine accessories for Brezza · fitted at ${DEALER.name}')"><span class="ic grey">${I.bag}</span><span><div class="t">Genuine accessories</div><div class="d">Shop and fit at your dealer</div></span>${I.chev}</button>
+      <button class="li" onclick="toast('TrueValue estimate ₹8.1 to 8.6 lakh · health report attached')"><span class="ic grey">${I.tag}</span><span><div class="t">Sell or exchange · TrueValue</div><div class="d">Price backed by your car's health record</div></span>${I.chev}</button>
+      <button class="li" onclick="toast('Opening the Brezza owner manual')"><span class="ic grey">${I.book}</span><span><div class="t">Car manual</div><div class="d">Searchable owner's manual</div></span>${I.chev}</button>
+    </div>
     <div class="sec">App</div>
     <div class="list">
+      <button class="li" onclick="toast('Hindi and regional languages ship with the pilot build')"><span class="ic grey">${I.voice}</span><span><div class="t">Language</div><div class="d">English · हिन्दी</div></span>${I.chev}</button>
       <div class="li"><span class="ic grey">${I.moon}</span><span><div class="t">Black theme</div></span><button class="tog" role="switch" aria-checked="${S.theme==='dark'}" aria-label="Black theme" onclick="setTheme(S.theme==='dark'?'light':'dark')"></button></div>
       <button class="li" onclick="toast('Calling Suzuki Connect care · 1800 102 1800')"><span class="ic grey">${I.help}</span><span><div class="t">Help &amp; support</div><div class="d">Call or chat</div></span>${I.chev}</button>
     </div>`;
@@ -720,7 +865,7 @@ const screens = {
       <div class="hd"><span class="ic" style="background:var(--good-soft);color:var(--good)">${I.shield}</span>
         <div style="flex:1"><div class="nm">Safe</div><div class="pr"><b>Free</b> for the life of your car</div></div>
         <span class="tag good">Always on</span></div>
-      ${li(['SOS and crash alert to family and ambulance','Theft and tow-away alerts','Breakdown help, recall notices'])}
+      ${li(['SOS, airbag and crash alert to family and ambulance','Theft, intrusion and tow-away alerts, immobiliser','Breakdown help, seatbelt reminder, recall notices'])}
       <div class="fine" style="margin-top:8px">Included with every car. Can't be switched off.</div>
     </div>
 
@@ -728,7 +873,7 @@ const screens = {
       <div class="hd"><span class="ic" style="background:var(--accent-soft);color:var(--accent)">${I.remote}</span>
         <div style="flex:1"><div class="nm">Plus</div><div class="pr"><b>₹999</b> a year · or ₹83 a month on UPI</div></div>
         ${current==='Plus'?'<span class="tag acc">Your plan</span>':S.care?'<span class="tag grey">In Care+</span>':''}</div>
-      ${li(['Remote lock and A/C','Live tracking, geofence, trip history','Monthly health report'])}
+      ${li(['Remote lock, A/C now or scheduled, lights, horn','Live tracking, 5 geofences, Safe Time, valet alert','Trips, driving score, Apple Watch and Alexa','Monthly health report'])}
       <div class="ft">
         ${S.care?`<div class="fine">Included in your Care+ plan.</div>`:
           S.plus?`<div class="muted" style="margin-bottom:10px">Free until ${S.plusFreeUntil}, then ₹999/year (₹2,499 for 3 years).</div><div class="btnrow"><button class="btn" onclick="keepPlus()">Keep Plus</button><button class="btn line" onclick="sheet('plusoff')">Not now</button></div>`:
@@ -746,6 +891,9 @@ const screens = {
 
     <div class="list" style="margin-top:10px">
       <button class="li" onclick="S.tripTab='analysis';go('trips');setTimeout(()=>sheet('reward'),60)"><span class="ic acc">${I.star}</span><span><div class="t">Safe-driver reward</div><div class="d">${S.insurance?'On · discount at your next renewal':'Off · lower insurance for good drivers'}</div></span>${I.chev}</button>
+    </div>
+    <div class="list" style="margin-top:10px">
+      <button class="li" onclick="push('features')"><span class="ic grey">${I.grid}</span><span><div class="t">All features</div><div class="d">Every Suzuki Connect feature and which plan it is in</div></span>${I.chev}</button>
     </div>
     <div class="fine" style="margin:12px 4px 0;text-align:center">Same price at ${DEALER.name}.</div>`;
   },
@@ -801,6 +949,76 @@ const screens = {
       ${item('Engine oil','Okay',64,'good','Next change in about 1,400 km')}
       ${item('Clutch','Okay',81,'good','')}
       <div style="padding:10px 0"><div class="row"><b style="font-size:13.5px">Fault codes</b><span class="tag good">None</span></div></div>
+    </div>`;
+  },
+
+  /* ---------------- ALERTS & LIMITS (all of today's alert types) ---------------- */
+  limits(){
+    const lockedRow=(ic,t,d)=>`<div class="li"><span class="ic good">${ic}</span><span><div class="t">${t}</div><div class="d">${d}</div></span><button class="tog locked" role="switch" aria-checked="true" aria-disabled="true" aria-label="${t}" onclick="toast('Safety alerts are always on and free')"></button></div>`;
+    /* plus=true means the switch is part of Plus: without Plus it opens the Plus sheet instead */
+    const row=(ic,col,t,d,key,plus,msgOn,msgOff)=>{
+      const act=`S.${key}=!S.${key};toast(S.${key}?'${msgOn}':'${msgOff}')`;
+      return `<div class="li"><span class="ic ${col}">${ic}</span><span><div class="t">${t}</div><div class="d">${d}</div></span><button class="tog" role="switch" aria-checked="${S[key]}" aria-label="${t}" onclick="${plus?`plusOr(()=>{${act}})`:act}"></button></div>`;
+    };
+    return `
+    <div class="sec" style="margin-top:6px">Always on · Safe, free for life</div>
+    <div class="list">
+      ${lockedRow(I.shield,'Airbag and crash alert','SMS and call to 5 contacts with GPS location')}
+      ${lockedRow(I.wrench,'Breakdown alert','Roadside help with your location')}
+      ${lockedRow(I.car,'Tow-away alert','If the car moves while switched off')}
+      ${lockedRow(I.eye,'Intrusion alert','Door or bonnet opened while locked')}
+      ${lockedRow(I.immob,'Stolen-car immobiliser','On request with a copy of the FIR')}
+      ${lockedRow(I.user,'Seatbelt reminder','Driver belt unbuckled while moving')}
+    </div>
+    <div class="sec">Your limits · Plus</div>
+    <div class="list">
+      ${row(I.speed,'crit','Overspeed alert',`Alert above ${S.speedLimit} km/h`,'speedOn',true,'Overspeed alert on','Overspeed alert off')}
+      ${S.speedOn?`<div style="padding:4px 14px 12px"><div class="times" style="grid-template-columns:repeat(4,1fr)">${[60,80,100,120].map(v=>`<button class="time" aria-pressed="${S.speedLimit===v}" onclick="plusOr(()=>{S.speedLimit=${v};render()})">${v}</button>`).join('')}</div></div>`:''}
+      ${row(I.clock,'acc','Safe Time','Alert if driven between 11 PM and 6 AM','safeTime',true,'Safe Time on · 11 PM to 6 AM','Safe Time off')}
+      ${row(I.key,'acc','Valet alert','Over 2 km or 40 km/h in valet mode','valet',true,'Valet mode on','Valet mode off')}
+      ${row(I.nav,'acc','Trip start and end','Notify Papa when a trip starts and ends','tripAlerts',true,'Trip alerts on','Trip alerts off')}
+    </div>
+    <div class="sec">Reminders · free</div>
+    <div class="list">
+      ${row(I.fuelp,'warn','Low fuel and range','Below 50 km of range','lowFuel',false,'Low fuel alert on','Low fuel alert off')}
+      ${row(I.ac,'warn','A/C left on while parked','Switch it off from the alert','acLeft',false,'A/C reminder on','A/C reminder off')}
+      <button class="li" onclick="push('health')"><span class="ic care">${I.heart}</span><span><div class="t">Maintenance and health</div><div class="d">Battery, brakes, oil · free alert, Care+ fixes it</div></span>${I.chev}</button>
+    </div>
+    <button class="btn text" style="width:100%;margin-top:4px" onclick="push('fences')">Geofence zones</button>`;
+  },
+
+  /* ---------------- ALL FEATURES: every feature of today's app, and where it sits in 2.0 ---------------- */
+  features(){
+    const T={safe:['good','Safe · free'],free:['grey','Free'],plus:['acc','Plus'],care:['care','Care+'],nw:['warn','New']};
+    const G=[
+      ['Safety',[['Airbag and crash alert to 5 contacts','SMS, call and GPS location','safe',"push('limits')"],['SOS button','Response desk in under 60 secs','safe',"go('remote')"],['Breakdown alert','Roadside help','safe',"push('limits')"],['Seatbelt reminder','','safe',"push('limits')"],['Overspeed alert','Your own limit','plus',"push('limits')"]]],
+      ['Security',[['Intrusion and tow-away alerts','','safe',"push('limits')"],['Stolen-car immobiliser','With a copy of the FIR','safe',"go('remote')"],['Polygon geofence','Any shape, up to 5 zones','plus',"push('fences')"],['Safe Time','Alerts outside set hours','plus',"push('limits')"],['Valet mode and alert','','plus',"go('remote')"]]],
+      ['Monitoring',[['Live dashboard','Fuel, range, odometer, battery, locks, lights','free',"go('home')"],['Low fuel, low range, A/C left on','','free',"push('limits')"],['Trip start and end alerts','','plus',"push('limits')"],['Vehicle health and maintenance alerts','The alert is free; Care+ pays for the fix','free',"push('health')"]]],
+      ['Remote',[['Lock, alarm, hazard, headlights, find car','','plus',"go('remote')"],['A/C now or on a schedule','','plus',"go('remote')"],['Battery check','','free',"go('remote')"]]],
+      ['Location and trips',[['Live location and sharing','','plus',"go('location')"],['Trip history and trip planning','','plus',"go('location')"],['Nearby fuel, parking booking, chargers','','free',"go('location')"]]],
+      ['Driving',[['Driving analysis and score','','plus',"S.tripTab='analysis';go('trips')"],['Leaderboard: city, state, India','','plus',"S.tripTab='board';go('trips')"],['Share trips','','plus',"S.tripTab='history';go('trips')"]]],
+      ['EV · e VITARA',[['Remote and scheduled charging','','plus',"sheet('cars')"],['Charger finder','','free',"go('location')"]]],
+      ['Devices',[['Apple Watch with 4-digit mPIN','','plus',"push('settings')"],['Alexa voice skill','','plus',"push('settings')"],['SmartPlay Pro sync, in-car Alexa and navigation','','plus',"push('settings')"],['Over-the-air software and map updates','','free',"push('settings')"]]],
+      ['Ownership',[['Service history and contract details','','free',"push('settings')"],['Guest access','','free',"push('settings')"],['Genuine accessories shop','','free',"push('settings')"],['TrueValue: sell or exchange','','free',"push('settings')"],['Car manual','','free',"push('settings')"]]],
+      ['New in 2.0',[['Fault predicted weeks early','Free alert to every owner','nw',"push('health')"],['Book your own dealer, pick-up and drop','','nw',"push('health')"],['Care+ prepaid service','₹3,999 a year, includes Plus','care',"push('plans')"],['Safe-driver insurance reward','Opt-in, discount only','nw',"S.tripTab='analysis';go('trips')"],['Renew in the app on UPI, same price at the dealer','₹83 a month','nw',"push('plans')"]]],
+    ];
+    const n=k=>G.reduce((a,g)=>a+g[1].filter(f=>f[2]===k).length,0);
+    return `
+    <div class="summary">
+      <div class="k">TODAY'S SUZUKI CONNECT, INSIDE 2.0</div>
+      <div class="v" style="font-size:16px;line-height:1.3">Every feature stays. What changes is who pays for it.</div>
+      <div class="legend"><div><b>${n('safe')}</b>Safe · free</div><div><b>${n('free')}</b>Free</div><div><b>${n('plus')}</b>Plus ₹999</div><div><b>${n('nw')+n('care')}</b>New</div></div>
+    </div>
+    ${G.map(([g,rows])=>`<div class="sec">${g}</div><div class="list">${rows.map(([t,d,k,act])=>`<button class="li fx" onclick="${act}"><span><div class="t">${t}</div>${d?`<div class="d">${d}</div>`:''}</span><span class="tag ${T[k][0]}">${T[k][1]}</span></button>`).join('')}</div>`).join('')}
+    <div class="card" style="margin-top:14px">
+      <div class="b">Fixed from today's app</div>
+      <ul class="chk yes fixed" style="margin-top:6px">
+        <li>${I.check}<span>Status icons have text labels</span></li>
+        <li>${I.check}<span>Service, insurance and Connect in one app, not three</span></li>
+        <li>${I.check}<span>Renewal on UPI at ₹999, not ₹2,899 on a page that breaks</span></li>
+        <li>${I.check}<span>One theme across every tab</span></li>
+        <li>${I.check}<span>Safety never stops when a plan lapses</span></li>
+      </ul>
     </div>`;
   },
 
@@ -902,6 +1120,31 @@ const sheets = {
     <ul class="chk yes"><li>${I.check}<span>SOS, crash, theft and breakdown alerts stay on, free</span></li></ul>
     <div class="btnrow" style="margin-top:16px"><button class="btn line" onclick="togglePlus(false)">Let it end</button><button class="btn" onclick="keepPlus()">Keep Plus</button></div>`;
   },
+  acsched(){
+    return `
+    <h3>Scheduled A/C</h3>
+    <div class="lead">The cabin is cool before you get in.</div>
+    <div class="sec">Start at · weekdays</div>
+    <div class="times">${['07:45','08:15','08:45'].map(t=>`<button class="time" aria-pressed="${S.acTime===t}" onclick="S.acTime='${t}';render()">${t}</button>`).join('')}</div>
+    <div class="sec">Temperature</div>
+    <div class="times">${[20,22,24].map(t=>`<button class="time" aria-pressed="${S.acTemp===t}" onclick="S.acTemp=${t};render()">${t}°C</button>`).join('')}</div>
+    <div class="list" style="margin-top:14px;box-shadow:none"><div class="li"><span class="ic acc">${I.clock}</span><span><div class="t">Schedule on</div><div class="d">Runs for 10 minutes, then stops</div></span><button class="tog" role="switch" aria-checked="${S.acSched}" aria-label="Schedule on" onclick="S.acSched=!S.acSched;render()"></button></div></div>
+    <button class="btn" style="margin-top:14px" onclick="closeSheet();toast(S.acSched?'A/C scheduled · weekdays '+S.acTime+' · '+S.acTemp+'°C':'A/C schedule off')">Save</button>`;
+  },
+  cars(){
+    return `
+    <h3>My cars</h3>
+    <div class="lead">One login for every car in the family.</div>
+    <div class="list" style="margin-top:12px;box-shadow:none">
+      <button class="li" onclick="closeSheet()"><span class="ic acc">${I.car}</span><span><div class="t">Brezza ZXi · UP16 AB 4421</div><div class="d">Yours · Plus</div></span><span class="tag acc">Viewing</span></button>
+      <div class="li" style="align-items:start"><span class="ic good">${I.plug}</span><span><div class="t">e VITARA · HR26 EV 8640</div><div class="d">Papa's car · battery 78% · 390 km range</div>
+        <div class="meter"><i style="width:78%;background:var(--good)"></i></div>
+        <div class="d" style="margin-top:6px">Charging scheduled for 11 PM (off-peak)</div>
+        <div class="btnrow" style="margin-top:8px"><button class="btn sm soft" onclick="toast('Charging started · full by 4:40 AM')">Start charging</button><button class="btn sm soft" onclick="closeSheet();go('location');toast('2 fast chargers within 3 km · 1 free now')">Find chargers</button></div>
+      </span><span></span></div>
+    </div>
+    <div class="fine" style="margin-top:10px">An older Maruti joins with the plug-in device at your dealer.</div>`;
+  },
   plusinfo(){
     return `
     <h3>Part of Plus</h3>
@@ -918,6 +1161,8 @@ const sheets = {
 function keepPlus(){ S.plus=true; S.plusFreeUntil='10 Nov 2026'; S.renewals[1].days=365; S.renewals[1].sent=true; S.sheet=null; toast('Plus renewed · ₹999 from 10 Nov'); }
 function togglePlus(on){ S.plus=on; S.sheet=null; if(!on) S.care=false; toast(on?'Plus is on':'Plus ends '+S.plusFreeUntil); }
 function toggleCare(on){ S.care=on; if(on){ S.plus=true; } S.sheet=null; toast(on?'Care+ added':'Care+ won\'t renew'); }
+/* run a Plus feature, or explain Plus if the owner doesn't have it (safety features never go through here) */
+function plusOr(fn){ if(!S.plus){ sheet('plusinfo'); return; } fn(); render(); }
 function toggleInsurance(){ S.insurance=!S.insurance; toast(S.insurance?'Reward on':'Sharing off'); }
 function confirmBooking(){
   const covered = S.option==='care';
@@ -1023,7 +1268,7 @@ function nudge(i){ S.renewals[i].sent=true; render(); }
 /* ============================================================
    PAGE-LEVEL CONTROLS
    ============================================================ */
-function showSide(side){ S.side=side; $('side-owner').hidden=side!=='owner'; $('side-console').hidden=side!=='console'; $('sw-owner').setAttribute('aria-pressed',side==='owner'); $('sw-console').setAttribute('aria-pressed',side==='console'); $('guideBtn').hidden=side!=='owner'; render(); window.scrollTo({top:0,behavior:'smooth'}); }
+function showSide(side){ S.side=side; $('side-owner').hidden=side!=='owner'; $('side-console').hidden=side!=='console'; $('side-compare').hidden=side!=='compare'; $('sw-owner').setAttribute('aria-pressed',side==='owner'); $('sw-console').setAttribute('aria-pressed',side==='console'); $('sw-compare').setAttribute('aria-pressed',side==='compare'); $('guideBtn').hidden=side!=='owner'; render(); window.scrollTo({top:0,behavior:'smooth'}); }
 function setRole(r){ S.role=r; render(); }
 function setTheme(t){ S.theme=t; $('phone').dataset.theme=t; $('th-light').setAttribute('aria-pressed',t==='light'); $('th-dark').setAttribute('aria-pressed',t==='dark'); render(); }
 function toggleGuide(){ S.guide=!S.guide; $('guide').hidden=!S.guide; $('side-owner').classList.toggle('noguide',!S.guide); $('guideBtn').textContent=S.guide?'Hide guide':'Show guide'; }
@@ -1035,6 +1280,7 @@ function demo(n){
   if(n===3){ if(!S.option) S.option='care'; S.screen='book'; S.stack=['home','health']; }
   if(n===4){ S.role='dealer'; if(!S.booked){ S.option=S.option||'care'; S.day=S.day||'Tue 25 Nov'; S.time=S.time||'11:00'; confirmBooking(); showSide('console'); } }
   if(n===5){ S.screen='trips'; S.stack=[]; S.tripTab='analysis'; S.sheet='reward'; }
+  if(n===6){ S.screen='features'; S.stack=['settings']; }
   S.sheet = n===5 ? 'reward' : null;
   render(true);
 }
